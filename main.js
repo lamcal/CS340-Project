@@ -18,8 +18,11 @@ app.use('/static', express.static('public'));
 app.set('view engine', 'handlebars');
 app.set('port', process.argv[2]);
 app.set('mysql', mysql);
+
 app.use('/customer', require('./customer.js'));
 app.use('/order', require('./order.js'));
+app.use('/product', require('./product.js'));
+
 app.use('/', express.static('public'));
 
 app.use(function(req,res){

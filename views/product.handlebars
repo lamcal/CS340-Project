@@ -1,0 +1,35 @@
+<html>
+<h3>Insert new product here:</h3>
+<form id="addproduct" action="/product" method="post">
+    Supplier ID: <input type="number" name="supplier_id"><br>
+    Product Name: <input type="text" name="product_name"><br>
+    Product Stock: <input type="number" name="product_stock"><br>
+    Price: <input type="number" step="0.01" name="price"><br>
+    <input type="submit" value="Submit">
+ </form>
+<br/>
+
+<h3>Current products:</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Supplier ID</th>
+            <th>Product Name</th>
+            <th>Product Stock</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each product}}
+        <tr>
+            <td>{{supplier_id}}</td>
+            <td>{{product_name}}</td>
+            <td>{{product_stock}}</td>
+            <td>{{price}}</td>
+            <td><button onclick="deleteProduct({{id}})">Delete</button></td>
+            <td><a href="/product/{{id}}">Update</a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</html>

@@ -2,55 +2,55 @@ module.exports = function(){
     var express = require('express');
     var router = express.Router();
 
-    function getOrder(res, mysql, context, complete){
-        mysql.pool.query("SELECT Orders.order_id as id, customer_id, order_placed, total_due, payment_method FROM Orders", function(error, results, fields){
+    function getProduct(res, mysql, context, complete){
+        mysql.pool.query("SELECT Products.product_id as id, supplier_id, product_name, product_stock, price FROM Products", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            context.order = results;
+            context.product = results;
             complete();
         });
     }
 
-    /* Display all orders */
+    /* Display all product */
 
     router.get('/', function(req, res){
         var callbackCount = 0;
         var context = {};
-        context.jsscripts = ["deleteorder.js"];
+        context.jsscripts = ["deleteproduct.js"];
         var mysql = req.app.get('mysql');
-        getOrder(res, mysql, context, complete);
+        getProduct(res, mysql, context, complete);
         function complete(){
             callbackCount++;
             if(callbackCount >= 1){
-                res.render('order', context);
+                res.render('product', context);
             }
         }
     });
 
-    /* Adds an order, redirects to the order page after adding */
+    /* Adds a product, redirects to the product page after adding */
 
     router.post('/', function(req, res){
         var mysql = req.app.get('mysql');
-        var sql = "INSERT INTO Orders (customer_id, order_placed, total_due, payment_method) VALUES (?,?,?,?)";
-        var inserts = [req.body.customer_id, req.body.order_placed, req.body.total_due, req.body.payment_method];
+        var sql = "INSERT INTO Products (supplier_id, product_name, product_stock, price) VALUES (?,?,?,?)";
+        var inserts = [req.body.supplier_id, req.body.product_name, req.body.product_stock, req.body.price];
         sql = mysql.pool.query(sql,inserts,function(error, results, fields){
             if(error){
                 console.log(JSON.stringify(error))
                 res.write(JSON.stringify(error));
                 res.end();
             }else{
-                res.redirect('/order');
+                res.redirect('/product');
             }
         });
     });
 
-    /* Delete an order */
+    /* Delete a product */
 
     router.delete('/:id', function(req, res){
         var mysql = req.app.get('mysql');
-        var sql = "DELETE FROM Orders WHERE order_id = ?";
+        var sql = "DELETE FROM Products WHERE product_id = ?";
         var inserts = [req.params.id];
         sql = mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
@@ -65,5 +65,4 @@ module.exports = function(){
     })
 
     return router;
-    /* TEST */
 }();

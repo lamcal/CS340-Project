@@ -56,7 +56,7 @@ module.exports = function(){
         getCustomerWithEmailLike(req, res, mysql, context, complete);
         function complete(){
             callbackCount++;
-            if(callbackCount >= 2){
+            if(callbackCount >= 1){
                 console.log(context);
                 res.render('customer', context);
             }

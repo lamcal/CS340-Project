@@ -21,7 +21,6 @@
     <input type="button" value="Search" onclick="searchCustomerByEmail()">
 </form>
 
-
 <h3>Current customers:</h3>
 <table>
     <thead>
@@ -69,14 +68,10 @@
     };
 
     function searchCustomerByEmail(){
-        var email_search_string = document.getElementById('email_search_string').value;
-        $.ajax({
-            url: '/customer/search/' + email_search_string,
-            type: 'POST',
-            success: function(result){
-                window.location.reload(true);
-            }
-        })
+        //get the first name 
+        var email_search_string  = document.getElementById('email_search_string').value;
+        //construct the URL and redirect to it
+        window.location = '/customer/search/' + encodeURI(email_search_string);
     };
 
 </script>

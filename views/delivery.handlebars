@@ -1,0 +1,32 @@
+<html>
+<h3>Insert new delivery here:</h3>
+<form id="adddelivery" action="/delivery" method="post">
+    Order ID: <input type="number" name="order_id"><br>
+    Delivery Status: <input type="text" name="delivery_status"><br>
+    Delivery Date: <input type="date" name="delivery_date"><br>
+    <input type="submit" value="Submit">
+ </form>
+<br/>
+
+<h3>Current deliveries:</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Delivery Status</th>
+            <th>Delivery Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each delivery}}
+        <tr>
+            <td>{{order_id}}</td>
+            <td>{{delivery_status}}</td>
+            <td>{{delivery_date}}</td>
+            <td><button onclick="deleteDelivery({{id}})">Delete</button></td>
+            <td><a href="/delivery/{{id}}">Update</a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</html>

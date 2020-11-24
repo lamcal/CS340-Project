@@ -22,6 +22,7 @@ app.set('mysql', mysql);
 app.use('/customer', require('./customer.js'));
 app.use('/order', require('./order.js'));
 app.use('/product', require('./product.js'));
+app.use('/delivery', require('./delivery.js'));
 
 app.use('/', express.static('public'));
 

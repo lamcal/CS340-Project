@@ -1,0 +1,50 @@
+<html>
+<h3>Add new customer:</h3>
+<form id="addcustomer" action="/customer" method="post">
+    First name: <input type="text" name="first_name"><br>
+    Last name: <input type="text" name="last_name"><br>
+    Email: <input type="text" name="email"><br>
+    Password: <input type="text" name="password"><br>
+    Address 1: <input type="text" name="address_1"><br>
+    Address 2: <input type="text" name="address_2"><br>
+    City: <input type="text" name="city"><br>
+    State: <input type="text" name="state"><br>
+    Zip: <input type="number" name="zip_code"><br>
+    <input type="submit" value="Submit">
+ </form>
+<br/>
+
+<h3>Current customers:</h3>
+<table>
+    <thead>
+        <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Password</th>
+            <th>Address 1</th>
+            <th>Address 2</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each customer}}
+        <tr>
+            <td>{{first_name}}</td>
+            <td>{{last_name}}</td>
+            <td>{{email}}</td>
+            <td>{{password}}</td>
+            <td>{{address_1}}</td>
+            <td>{{address_2}}</td>
+            <td>{{city}}</td>
+            <td>{{state}}</td>
+            <td>{{zip_code}}</td>
+            <td><button onclick="deleteCustomer({{id}})">Delete</button></td>
+            <td><a href="/customer/{{id}}">Update</a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</html>

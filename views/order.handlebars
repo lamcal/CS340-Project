@@ -1,0 +1,39 @@
+<html>
+<h3>Place new order here:</h3>
+<form id="addorder" action="/order" method="post">
+    Customer ID: <input type="number" name="customer_id"><br>
+    Order Placed: <input type="date" name="order_placed"><br>
+    Total Due: <input type="number" step="0.01" name="total_due"><br>
+    Payment Method: 
+        <input type="radio" name="payment_method" id="paypal" maxlength="100" value="FALSE">
+        <label for="paypal">PayPal</label>
+        <input type="radio" name="payment_method" id="credit_card" maxlength="100" value="TRUE">
+        <label for="credit_card">Credit Card</label><br>
+    <input type="submit" value="Submit">
+ </form>
+<br/>
+
+<h3>Current orders:</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Customer ID</th>
+            <th>Order Placed</th>
+            <th>Total Due</th>
+            <th>Payment Method</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each order}}
+        <tr>
+            <td>{{customer_id}}</td>
+            <td>{{order_placed}}</td>
+            <td>{{total_due}}</td>
+            <td>{{payment_method}}</td>
+            <td><button onclick="deleteOrder({{id}})">Delete</button></td>
+            <td><a href="/order/{{id}}">Update</a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</html>

@@ -1,0 +1,29 @@
+<html>
+<h3>Insert new supplier here:</h3>
+<form id="addsupplier" action="/supplier" method="post">
+    Supplier Name: <input type="text" name="supplier_name"><br>
+    Supplier Quantity: <input type="number" name="supplier_quantity"><br>
+    <input type="submit" value="Submit">
+ </form>
+<br/>
+
+<h3>Current suppliers:</h3>
+<table>
+    <thead>
+        <tr>
+            <th>Supplier Name</th>
+            <th>Supplier Quantity</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{#each supplier}}
+        <tr>
+            <td>{{supplier_name}}</td>
+            <td>{{supplier_quantity}}</td>
+            <td><button onclick="deleteSupplier({{id}})">Delete</button></td>
+            <td><a href="/supplier/{{id}}">Update</a></td>
+        </tr>
+        {{/each}}
+    </tbody>
+</table>
+</html>

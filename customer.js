@@ -13,6 +13,23 @@ module.exports = function(){
         });
     }
 
+    /* Find customer whose email starts with a given string in the req */
+
+    function getCustomerWithEmailLike(req, res, mysql, context, complete) {
+      //sanitize the input as well as include the % character
+      var query = "SELECT Customers.customer_id as id, first_name, last_name, email, password, address_1, address_2, city, state, zip_code FROM Customers WHERE Customers.email LIKE " + mysql.pool.escape(req.params.s + '%');
+      console.log(query)
+
+      mysql.pool.query(query, function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.customer = results;
+            complete();
+        });
+    }
+
     /* Display all customers */
 
     router.get('/', function(req, res){
@@ -24,6 +41,23 @@ module.exports = function(){
         function complete(){
             callbackCount++;
             if(callbackCount >= 1){
+                res.render('customer', context);
+            }
+        }
+    });
+
+    /* Display customer by email. Requires web based javascript to delete users with AJAX */
+
+    router.get('/search/:s', function(req, res){
+        var callbackCount = 0;
+        var context = {};
+        context.jsscripts = ["deletecustomer.js","searchcustomer.js"];
+        var mysql = req.app.get('mysql');
+        getCustomerWithEmailLike(req, res, mysql, context, complete);
+        function complete(){
+            callbackCount++;
+            if(callbackCount >= 2){
+                console.log(context);
                 res.render('customer', context);
             }
         }

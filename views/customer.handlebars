@@ -14,6 +14,14 @@
  </form>
 <br/>
 
+<form id='search_customer' action='' method=''>
+<!--- this form does not submit directly, the button handles all the interaction with backend -->
+    <label>Search for customer by email: </label>
+    <input id='email_search_string' type='text' name='email_search_string' value=''>
+    <input type="button" value="Search" onclick="searchCustomerByEmail()">
+</form>
+
+
 <h3>Current customers:</h3>
 <table>
     <thead>
@@ -41,10 +49,36 @@
             <td>{{city}}</td>
             <td>{{state}}</td>
             <td>{{zip_code}}</td>
-            <td><button onclick="deleteCustomer({{id}})">Delete</button></td>
+            <td><button onclick="deleteCustomer({{id}})"> Delete </button></td>
             <td><a href="/customer/{{id}}">Update</a></td>
         </tr>
         {{/each}}
     </tbody>
 </table>
+
+<script type="text/javascript">
+
+    function deleteCustomer(id){
+        $.ajax({
+            url: '/customer/' + id,
+            type: 'DELETE',
+            success: function(result){
+                window.location.reload(true);
+            }
+        })
+    };
+
+    function searchCustomerByEmail(){
+        var email_search_string = document.getElementById('email_search_string').value;
+        $.ajax({
+            url: '/customer/search/' + email_search_string,
+            type: 'POST',
+            success: function(result){
+                window.location.reload(true);
+            }
+        })
+    };
+
+</script>
+
 </html>

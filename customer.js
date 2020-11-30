@@ -14,6 +14,8 @@ module.exports = function(){
             complete();
         });
     }
+
+    /*get a specific customer with a given customer_id*/
     function getCustomerById(res, mysql, context, id, complete){
         var sql = "SELECT Customers.customer_id as id, first_name, last_name, email, password, address_1, address_2, city, state, zip_code FROM Customers WHERE customer_id = ?";
         var inserts = [id];
@@ -112,7 +114,7 @@ module.exports = function(){
         });
     });
 
-    /* The URI that updates data is sent to so that a customer is updated */
+    /* The URI that updates what data is sent to so that a chosen customer is updated */
     router.put('/:id', function(req, res){
         var mysql = req.app.get('mysql');
         var sql = "UPDATE Customers SET first_name = ?, last_name = ?, email = ?, password = ?, address_1 = ?, address_2 = ?, city = ?, state = ?, zip_code = ? WHERE customer_id = ?";

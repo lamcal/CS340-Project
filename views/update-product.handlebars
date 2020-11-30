@@ -1,6 +1,6 @@
 <html>
-<h1> Update Product#{{product.product_id}}:</h1>
-<form id="update-product" action="/order" method = "post">
+<h1> Update Product #{{product.id}}:</h1>
+<form id="update-product" action="/product" method = "post">
     Supplier ID: <input type="number" name="supplier_id" value="{{product.supplier_id}}"><br>
     Product Name: <input type="text" name="product_name" value="{{product.product_name}}"><br>
     Product Stock: <input type="number" name="product_stock" value="{{product.product_stock}}"><br>
@@ -10,7 +10,7 @@
 <script type="text/javascript">
     
     function updateProduct(id){
-        $.ajax({
+        $.ajax({    
             url: '/product/' + id,
             type: 'PUT',
             data: $('#update-product').serialize(),

@@ -13,7 +13,7 @@ module.exports = function(){
         });
     }
 
-    /*Get a specific product based on a given order_id */
+    /*Get a specific product based on a given product_id */
     function getProductById(res, mysql, context, id, complete){
         var sql = "SELECT Products.product_id as id, supplier_id, product_name, product_stock, price FROM Products WHERE product_id = ?";
         var inserts = [id];

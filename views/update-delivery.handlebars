@@ -1,0 +1,23 @@
+<html>
+<h1> Update Delivery #{{delivery.id}}:</h1>
+<form id="update-delivery" action="/delivery" method = "post">
+    Order ID: <input type="number" name="order_id" value="{{delivery.order_id}}"><br>
+    Delivery Status: <input type="text" name="delivery_status" value="{{delivery.delivery_status}}"><br>
+    Delivery Date: <input type="date" name="delivery_date" value="{{delivery.delivery_date}}"><br>
+</form>
+<botton onclick="updateDelivery({{delivery.id}})">Update</botton>
+<script type="text/javascript">
+    
+    function updateDelivery(id){
+        $.ajax({    
+            url: '/delivery/' + id,
+            type: 'PUT',
+            data: $('#update-delivery').serialize(),
+            success: function(result){
+                window.location.replace("./");
+            }
+        })
+    };
+
+</script>
+</html>

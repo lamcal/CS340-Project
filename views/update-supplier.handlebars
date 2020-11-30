@@ -1,0 +1,21 @@
+<html>
+<h1> Update Supplier #{{supplier.id}}:</h1>
+<form id="update-supplier" action="/supplier" method = "post">
+    Supplier Name: <input type="text" name="supplier_name" value="{{supplier.supplier_name}}"><br>
+    Supplier Quantity: <input type="number" name="supplier_quantity" value="{{supplier.supplier_quantity}}"><br>
+</form>
+<botton onclick="updateSupplier({{supplier.id}})">Update</botton>
+<script type="text/javascript">
+    
+    function updateSupplier(id){
+        $.ajax({
+            url: '/supplier/' + id,
+            type: 'PUT',
+            data: $('#update-supplier').serialize(),
+            success: function(result){
+                window.location.replace("./");
+            }
+        })
+    };
+</script>
+</html>

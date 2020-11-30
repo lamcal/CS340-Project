@@ -76,7 +76,7 @@ module.exports = function(){
         });
     });
 
-    /* The URI that updates what data is sent to so that a chosen products is updated */
+    /* The URI that updates what data is sent to so that a chosen product is updated */
     router.put('/:id', function(req, res){
         var mysql = req.app.get('mysql');
         var sql = "UPDATE Products SET supplier_id = ?, product_name = ?, product_stock = ?, price = ? WHERE product_id = ?";

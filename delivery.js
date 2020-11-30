@@ -13,6 +13,20 @@ module.exports = function(){
         });
     }
 
+    /*Get a specific delivery based on a given delivery_id */
+    function getDeliveryById(res, mysql, context, id, complete){
+        var sql = "SELECT Deliveries.delivery_id as id, order_id, delivery_status, delivery_date FROM Deliveries WHERE delivery_id = ?";
+        var inserts = [id];
+        mysql.pool.query(sql, inserts, function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.delivery = results[0];
+            complete();
+        });
+    }
+
     /* Display all deliveries */
 
     router.get('/', function(req, res){
@@ -25,6 +39,23 @@ module.exports = function(){
             callbackCount++;
             if(callbackCount >= 1){
                 res.render('delivery', context);
+            }
+        }
+    });
+
+    /* Used for updating a chosen delivery */
+
+    router.get('/:id', function(req, res){
+        callbackCount = 0;
+        var context = {};
+        context.jsscripts = ["updatedelivery.js"];
+        var mysql = req.app.get('mysql');
+        getDeliveryById(res, mysql, context, req.params.id, complete);
+        function complete(){
+            callbackCount++;
+            if(callbackCount >= 1){
+                console.log(context);
+                res.render('update-delivery', context);
             }
         }
     });
@@ -42,6 +73,25 @@ module.exports = function(){
                 res.end();
             }else{
                 res.redirect('/delivery');
+            }
+        });
+    });
+
+    /* The URI that updates what data is sent to so that a chosen delivery is updated */
+    router.put('/:id', function(req, res){
+        var mysql = req.app.get('mysql');
+        var sql = "UPDATE Deliveries SET order_id = ?, delivery_status = ?, delivery_date = ? WHERE delivery_id = ?";
+        var inserts = [req.body.order_id, req.body.delivery_status, req.body.delivery_date, req.params.id];
+        sql = mysql.pool.query(sql, inserts, function(error, results, fields){
+            if(error){
+                console.log("There was an issue updating the selected delivery.")
+                console.log(error)
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            else{
+                res.status(200);
+                res.end();
             }
         });
     });

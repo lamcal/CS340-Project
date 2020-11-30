@@ -1,0 +1,28 @@
+<html>
+<h1> Update {{customer.first_name}} {{customer.last_name}}:</h1>
+<form id="update-customer" action="/customer" method = "post">
+    First name: <input type="text" name="first_name" value="{{customer.first_name}}"><br>
+    Last name: <input type="text" name="last_name" value="{{customer.last_name}}"><br>
+    Email: <input type="text" name="email" value="{{customer.email}}"><br>
+    Password: <input type="text" name="password" value="{{customer.password}}"><br>
+    Address 1: <input type="text" name="address_1" value="{{customer.address_1}}"><br>
+    Address 2: <input type="text" name="address_2" value="{{customer.address_2}}"><br>
+    City: <input type="text" name="city" value="{{customer.city}}"><br>
+    State: <input type="text" name="state" value="{{customer.state}}"><br>
+    Zip: <input type="number" name="zip_code"value="{{customer.zip_code}}"><br>
+</form>
+<botton onclick="updateCustomer({{customer.id}})">Update</botton>
+<script type="text/javascript">
+    
+    function updateCustomer(id){
+        $.ajax({
+            url: '/customer/' + id,
+            type: 'PUT',
+            data: $('#update-customer').serialize(),
+            success: function(result){
+                window.location.replace("./");
+            }
+        })
+    };
+</script>
+</html>

@@ -32,4 +32,19 @@
         {{/each}}
     </tbody>
 </table>
+
+<script type="text/javascript">
+
+    function deleteProduct(id){
+        $.ajax({
+            url: '/product/' + id,
+            type: 'DELETE',
+            success: function(result){
+                window.location.reload(true);
+            }
+        })
+    };
+
+</script>
+
 </html>

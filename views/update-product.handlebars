@@ -1,10 +1,15 @@
 <html>
 <h1> Update Product #{{product.id}}:</h1>
 <form id="update-product" action="/product" method = "post">
-    Supplier ID: <input type="number" name="supplier_id" value="{{product.supplier_id}}"><br>
-    Product Name: <input type="text" name="product_name" value="{{product.product_name}}"><br>
-    Product Stock: <input type="number" name="product_stock" value="{{product.product_stock}}"><br>
-    Price: <input type="number" step="0.01" name="price" value="{{product.price}}"><br>
+    Supplier ID: <select name='supplier_id' required>
+        {{#each supplier}}
+          <option value='{{product.supplier_id}}'>{{supplier_name}}</option>
+        {{/each}}
+    </select>
+    <br>
+    Product Name: <input type="text" name="product_name" value="{{product.product_name}}" required><br>
+    Product Stock: <input type="number" name="product_stock" value="{{product.product_stock}}" required min="0"><br>
+    Price: <input type="number" step="0.01" name="price" value="{{product.price}}" required min="0.00"><br>
 </form>
 <button onclick="updateProduct({{product.id}})">Update</button>
 <script type="text/javascript">

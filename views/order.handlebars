@@ -1,7 +1,7 @@
 <html>
 <h3>Place new order here:</h3>
 <form id="addorder" action="/order" method="post">
-    Customer ID: <select name='customer_id'>
+    Customer ID: <select name='customer_id' required>
         {{#each customer}}
           <option value='{{id}}'>{{first_name}} {{last_name}}</option>
         {{/each}}

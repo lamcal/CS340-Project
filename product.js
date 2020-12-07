@@ -13,6 +13,17 @@ module.exports = function(){
         });
     }
 
+    function getSupplier(res, mysql, context, complete){
+        mysql.pool.query("SELECT Suppliers.supplier_id as id, supplier_name FROM Suppliers", function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.supplier = results;
+            complete();
+        });
+    }
+
     /*Get a specific product based on a given product_id */
     function getProductById(res, mysql, context, id, complete){
         var sql = "SELECT Products.product_id as id, supplier_id, product_name, product_stock, price FROM Products WHERE product_id = ?";
@@ -34,9 +45,10 @@ module.exports = function(){
         context.jsscripts = ["deleteproduct.js"];
         var mysql = req.app.get('mysql');
         getProduct(res, mysql, context, complete);
+        getSupplier(res, mysql, context, complete);
         function complete(){
             callbackCount++;
-            if(callbackCount >= 1){
+            if(callbackCount >= 2){
                 res.render('product', context);
             }
         }
@@ -50,9 +62,10 @@ module.exports = function(){
         context.jsscripts = ["updateproduct.js"];
         var mysql = req.app.get('mysql');
         getProductById(res, mysql, context, req.params.id, complete);
+        getSupplier(res, mysql, context, complete);
         function complete(){
             callbackCount++;
-            if(callbackCount >= 1){
+            if(callbackCount >= 2){
                 console.log(context);
                 res.render('update-product', context);
             }

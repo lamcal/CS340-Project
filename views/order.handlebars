@@ -13,10 +13,20 @@
  </form>
 <br/>
 
+<!---
+<form id='search_order' action='' method=''>
+<!--- this form does not submit directly, the button handles all the interaction with backend --
+    <label>Search for orders by customer ID: </label>
+    <input id='cid_search_string' type='text' name='cid_search_string' value=''>
+    <input type="button" value="Search" onclick="searchOrderByCID()">
+</form>
+-->
+
 <h3>Current orders:</h3>
 <table>
     <thead>
         <tr>
+            <th>Order ID</th>
             <th>Customer ID</th>
             <th>Order Placed</th>
             <th>Total Due</th>
@@ -26,6 +36,7 @@
     <tbody>
         {{#each order}}
         <tr>
+            <td>{{id}}</td>
             <td>{{customer_id}}</td>
             <td>{{order_placed}}</td>
             <td>{{total_due}}</td>
@@ -47,6 +58,13 @@
                 window.location.reload(true);
             }
         })
+    };
+
+    function searchOrderByCID(){
+        //get the first name 
+        var cid_search_string  = document.getElementById('cid_search_string').value;
+        //construct the URL and redirect to it
+        window.location = '/order/search/' + encodeURI(cid_search_string);
     };
 
 </script>

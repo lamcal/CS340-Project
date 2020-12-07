@@ -24,6 +24,7 @@ app.use('/order', require('./order.js'));
 app.use('/product', require('./product.js'));
 app.use('/delivery', require('./delivery.js'));
 app.use('/supplier', require('./supplier.js'));
+app.use('/order_product', require('./order_product.js'));
 
 app.use('/', express.static('public'));
 

@@ -11,6 +11,7 @@
 <table>
     <thead>
         <tr>
+            <th>Supplier ID</th>
             <th>Supplier Name</th>
             <th>Supplier Quantity</th>
         </tr>
@@ -18,6 +19,7 @@
     <tbody>
         {{#each supplier}}
         <tr>
+            <td>{{id}}</td>
             <td>{{supplier_name}}</td>
             <td>{{supplier_quantity}}</td>
             <td><button onclick="deleteSupplier({{id}})">Delete</button></td>

@@ -8,7 +8,7 @@ module.exports = function(){
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            context.order_products = results;
+            context.order_product = results;
             complete();
         });
     }
@@ -22,7 +22,7 @@ module.exports = function(){
                 res.write(JSON.stringify(error));
                 res.end();
             }
-            context.order_products = results[0];
+            context.order_product = results[0];
             complete();
         });
     }
@@ -34,7 +34,7 @@ module.exports = function(){
         var context = {};
         context.jsscripts = ["deleteorder_product.js"];
         var mysql = req.app.get('mysql');
-        getOrder(res, mysql, context, complete);
+        getOrderProducts(res, mysql, context, complete);
         function complete(){
             callbackCount++;
             if(callbackCount >= 1){

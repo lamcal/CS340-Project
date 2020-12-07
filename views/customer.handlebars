@@ -1,15 +1,15 @@
 <html>
 <h3>Add new customer:</h3>
 <form id="addcustomer" action="/customer" method="post">
-    First name: <input type="text" name="first_name"><br>
-    Last name: <input type="text" name="last_name"><br>
-    Email: <input type="text" name="email"><br>
-    Password: <input type="text" name="password"><br>
-    Address 1: <input type="text" name="address_1"><br>
+    First name: <input type="text" name="first_name" required><br>
+    Last name: <input type="text" name="last_name" required><br>
+    Email: <input type="email" name="email" required><br>
+    Password: <input type="password" name="password" required><br>
+    Address 1: <input type="text" name="address_1" required><br>
     Address 2: <input type="text" name="address_2"><br>
-    City: <input type="text" name="city"><br>
-    State: <input type="text" name="state"><br>
-    Zip: <input type="number" name="zip_code"><br>
+    City: <input type="text" name="city" required><br>
+    State: <input type="text" name="state" required maxlength="2"><br>
+    Zip: <input type="number" name="zip_code" required min="10000" max="99999"><br>
     <input type="submit" value="Submit">
  </form>
 <br/>
@@ -44,7 +44,7 @@
             <td>{{first_name}}</td>
             <td>{{last_name}}</td>
             <td>{{email}}</td>
-            <td>{{password}}</td>
+            <td style="-webkit-text-security: disc;">{{password}}</td>
             <td>{{address_1}}</td>
             <td>{{address_2}}</td>
             <td>{{city}}</td>

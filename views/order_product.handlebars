@@ -1,9 +1,19 @@
 <html>
 <h3>Place new order_product here:</h3>
 <form id="addorder_product" action="/order_product" method="post">
-    Order ID: <input type="number" name="order_id"><br>
-    Product ID: <input type="number" name="product_id"><br>
-    Quantity: <input type="number" name="quantity"><br>
+    Order ID: <select name='order_id' required>
+        {{#each order}}
+          <option value='{{id}}'>{{id}} ({{first_name}} {{last_name}})</option>
+        {{/each}}
+    </select>
+    <br>
+    Product ID: <select name='product_id' required>
+        {{#each product}}
+          <option value='{{id}}'>{{product_name}}</option>
+        {{/each}}
+    </select>
+    <br>
+    Quantity: <input type="number" name="quantity" required min="0"><br>
     <input type="submit" value="Submit">
  </form>
 <br/>

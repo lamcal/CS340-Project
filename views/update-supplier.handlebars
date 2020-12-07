@@ -1,8 +1,8 @@
 <html>
 <h1> Update Supplier #{{supplier.id}}:</h1>
 <form id="update-supplier" action="/supplier" method = "post">
-    Supplier Name: <input type="text" name="supplier_name" value="{{supplier.supplier_name}}"><br>
-    Supplier Quantity: <input type="number" name="supplier_quantity" value="{{supplier.supplier_quantity}}"><br>
+    Supplier Name: <input type="text" name="supplier_name" value="{{supplier.supplier_name}}" required><br>
+    Supplier Quantity: <input type="number" name="supplier_quantity" value="{{supplier.supplier_quantity}}" required min="1"><br>
 </form>
 <button onclick="updateSupplier({{supplier.id}})">Update</button>
 <script type="text/javascript">

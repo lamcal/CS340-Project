@@ -3,7 +3,7 @@
 <form id="adddelivery" action="/delivery" method="post">
     Order ID: <select name='order_id' required>
         {{#each order}}
-          <option value='{{id}}'>{{id}}</option>
+          <option value='{{id}}'>{{id}} ({{first_name}} {{last_name}})</option>
         {{/each}}
     </select>
     <br>

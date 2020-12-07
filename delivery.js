@@ -14,7 +14,7 @@ module.exports = function(){
     }
 
     function getOrder(res, mysql, context, complete){
-        mysql.pool.query("SELECT Orders.order_id as id FROM Orders", function(error, results, fields){
+        mysql.pool.query("SELECT Orders.order_id as id, Customers.first_name, Customers.last_name FROM Orders LEFT JOIN Customers ON Orders.customer_id=Customers.customer_id ORDER BY id", function(error, results, fields){
             if(error){
                 res.write(JSON.stringify(error));
                 res.end();

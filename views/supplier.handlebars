@@ -1,8 +1,8 @@
 <html>
 <h3>Insert new supplier here:</h3>
 <form id="addsupplier" action="/supplier" method="post">
-    Supplier Name: <input type="text" name="supplier_name"><br>
-    Supplier Quantity: <input type="number" name="supplier_quantity"><br>
+    Supplier Name: <input type="text" name="supplier_name" required><br>
+    Supplier Quantity: <input type="number" name="supplier_quantity" required min="1"><br>
     <input type="submit" value="Submit">
  </form>
 <br/>

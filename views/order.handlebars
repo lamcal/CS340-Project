@@ -1,13 +1,18 @@
 <html>
 <h3>Place new order here:</h3>
 <form id="addorder" action="/order" method="post">
-    Customer ID: <input type="number" name="customer_id"><br>
-    Order Placed: <input type="date" name="order_placed"><br>
-    Total Due: <input type="number" step="0.01" name="total_due"><br>
+    Customer ID: <select name='customer_id'>
+        {{#each customer}}
+          <option value='{{id}}'>{{first_name}} {{last_name}}</option>
+        {{/each}}
+    </select>
+    <br>
+    Order Placed: <input type="date" name="order_placed" required><br>
+    Total Due: <input type="number" step="0.01" name="total_due" required min="0.00"><br>
     Payment Method: 
-        <input type="radio" name="payment_method" id="paypal" maxlength="100" value="FALSE">
+        <input type="radio" name="payment_method" id="paypal" maxlength="100" value="PayPal" required>
         <label for="paypal">PayPal</label>
-        <input type="radio" name="payment_method" id="credit_card" maxlength="100" value="TRUE">
+        <input type="radio" name="payment_method" id="credit_card" maxlength="100" value="Credit Card" required>
         <label for="credit_card">Credit Card</label><br>
     <input type="submit" value="Submit">
  </form>

@@ -13,6 +13,17 @@ module.exports = function(){
         });
     }
 
+    function getCustomer(res, mysql, context, complete){
+        mysql.pool.query("SELECT Customers.customer_id as id, first_name, last_name FROM Customers", function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.customer = results;
+            complete();
+        });
+    }
+
     /*Get a specific order based on a given order_id */
     function getOrderById(res, mysql, context, id, complete){
         var sql = "SELECT Orders.order_id as id, customer_id, order_placed, total_due, payment_method FROM Orders WHERE Order_id = ?";
@@ -27,23 +38,6 @@ module.exports = function(){
         });
     }
 
-    /* Find an order whose customer ID starts with a given number in the req */
-
-    function getOrderWithCIDLike(req, res, mysql, context, complete) {
-      //sanitize the input as well as include the % character
-      var query = "SELECT Orders.order_id as id, customer_id, order_placed, total_due, payment_method FROM Orders WHERE Orders.customer_id = " + mysql.pool.escape(req.params.s);
-      console.log(query)
-
-      mysql.pool.query(query, function(error, results, fields){
-            if(error){
-                res.write(JSON.stringify(error));
-                res.end();
-            }
-            context.order = results;
-            complete();
-        });
-    }
-
     /* Display all orders */
 
     router.get('/', function(req, res){
@@ -52,26 +46,10 @@ module.exports = function(){
         context.jsscripts = ["deleteorder.js"];
         var mysql = req.app.get('mysql');
         getOrder(res, mysql, context, complete);
+        getCustomer(res, mysql, context, complete);
         function complete(){
             callbackCount++;
-            if(callbackCount >= 1){
-                res.render('order', context);
-            }
-        }
-    });
-
-    /* Display customer by email. Requires web based javascript to delete users with AJAX */
-
-    router.get('/search/:s', function(req, res){
-        var callbackCount = 0;
-        var context = {};
-        context.jsscripts = ["deletecustomer.js","searchcustomer.js"];
-        var mysql = req.app.get('mysql');
-        getOrderWithCIDLike(req, res, mysql, context, complete);
-        function complete(){
-            callbackCount++;
-            if(callbackCount >= 1){
-                console.log(context);
+            if(callbackCount >= 2){
                 res.render('order', context);
             }
         }
@@ -85,9 +63,10 @@ module.exports = function(){
         context.jsscripts = ["updateorder.js"];
         var mysql = req.app.get('mysql');
         getOrderById(res, mysql, context, req.params.id, complete);
+        getCustomer(res, mysql, context, complete);
         function complete(){
             callbackCount++;
-            if(callbackCount >= 1){
+            if(callbackCount >= 2){
                 console.log(context);
                 res.render('update-order', context);
             }
@@ -149,5 +128,4 @@ module.exports = function(){
     })
 
     return router;
-    /* TEST */
 }();

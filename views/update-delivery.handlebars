@@ -1,9 +1,19 @@
 <html>
 <h1> Update Delivery #{{delivery.id}}:</h1>
 <form id="update-delivery" action="/delivery" method = "post">
-    Order ID: <input type="number" name="order_id" value="{{delivery.order_id}}"><br>
-    Delivery Status: <input type="text" name="delivery_status" value="{{delivery.delivery_status}}"><br>
-    Delivery Date: <input type="date" name="delivery_date" value="{{delivery.delivery_date}}"><br>
+    Order ID: <select name='order_id' required>
+        {{#each order}}
+          <option value='{{id}}'>{{id}}</option>
+        {{/each}}
+    </select>
+    <br>
+    Delivery Status: <select name='delivery_status' required>
+          <option type="text" value='Order processing'>Order processing</option>
+          <option type="text" value='In transit'>In transit</option>
+          <option type="text" value='Complete'>Complete</option>
+    </select>
+    <br>
+    Delivery Date: <input type="date" name="delivery_date" value="{{delivery.delivery_date}}" required><br>
 </form>
 <button onclick="updateDelivery({{delivery.id}})">Update</button>
 <script type="text/javascript">

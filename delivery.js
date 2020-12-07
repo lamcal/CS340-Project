@@ -13,6 +13,17 @@ module.exports = function(){
         });
     }
 
+    function getOrder(res, mysql, context, complete){
+        mysql.pool.query("SELECT Orders.order_id as id FROM Orders", function(error, results, fields){
+            if(error){
+                res.write(JSON.stringify(error));
+                res.end();
+            }
+            context.order = results;
+            complete();
+        });
+    }
+
     /*Get a specific delivery based on a given delivery_id */
     function getDeliveryById(res, mysql, context, id, complete){
         var sql = "SELECT Deliveries.delivery_id as id, order_id, delivery_status, delivery_date FROM Deliveries WHERE delivery_id = ?";
@@ -35,9 +46,10 @@ module.exports = function(){
         context.jsscripts = ["deletedelivery.js"];
         var mysql = req.app.get('mysql');
         getDelivery(res, mysql, context, complete);
+        getOrder(res, mysql, context, complete);
         function complete(){
             callbackCount++;
-            if(callbackCount >= 1){
+            if(callbackCount >= 2){
                 res.render('delivery', context);
             }
         }
@@ -51,9 +63,10 @@ module.exports = function(){
         context.jsscripts = ["updatedelivery.js"];
         var mysql = req.app.get('mysql');
         getDeliveryById(res, mysql, context, req.params.id, complete);
+        getOrder(res, mysql, context, complete);
         function complete(){
             callbackCount++;
-            if(callbackCount >= 1){
+            if(callbackCount >= 2){
                 console.log(context);
                 res.render('update-delivery', context);
             }

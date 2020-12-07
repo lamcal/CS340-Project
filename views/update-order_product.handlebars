@@ -1,0 +1,32 @@
+<html>
+<h1> Update Order_Product #{{Order_Products.order_product_id}}:</h1>
+<form id="update-order_product" action="/order_product" method = "post">
+    Order ID: <select name='order_id' required>
+        {{#each order}}
+          <option value='{{id}}'>{{id}} ({{first_name}} {{last_name}})</option>
+        {{/each}}
+    </select>
+    <br>
+    Product ID: <select name='product_id' required>
+        {{#each product}}
+          <option value='{{id}}'>{{product_name}}</option>
+        {{/each}}
+    </select>
+    <br>
+    Quantity: <input type="number" name="quantity" value="{{Order_Products.quantity}}" required min="0"><br>
+</form>
+<button onclick="updateOrder_Product({{Order_Products.order_product_id}})">Update</button>
+<script type="text/javascript">
+    
+    function updateOrder_Product(id){
+        $.ajax({
+            url: '/order_product/' + id,
+            type: 'PUT',
+            data: $('#update-order_product').serialize(),
+            success: function(result){
+                window.location.replace("./");
+            }
+        })
+    };
+</script>
+</html>

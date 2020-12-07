@@ -69,7 +69,7 @@ module.exports = function(){
 
     /* Used for updating a chosen order */
 
-    router.get('/:order_id', function(req, res){
+    router.get('/:id', function(req, res){
         callbackCount = 0;
         var context = {};
         context.jsscripts = ["updateorder_product.js"];
@@ -104,7 +104,7 @@ module.exports = function(){
     });
 
     /* The URI that updates what data is sent to so that a chosen order is updated */
-    router.put('/:order_id', function(req, res){
+    router.put('/:id', function(req, res){
         var mysql = req.app.get('mysql');
         var sql = "UPDATE Order_Products SET order_id = ?, product_id = ?, quantity = ? WHERE order_product_id = ?";
         var inserts = [req.body.order_id, req.body.product_id, req.body.quantity, req.params.order_id];
@@ -124,10 +124,10 @@ module.exports = function(){
 
     /* Delete an order */
 
-    router.delete('/:order_id', function(req, res){
+    router.delete('/:id', function(req, res){
         var mysql = req.app.get('mysql');
         var sql = "DELETE FROM Order_Products WHERE order_product_id = ?";
-        var inserts = [req.params.order_id];
+        var inserts = [req.params.id];
         sql = mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
                 console.log(error)

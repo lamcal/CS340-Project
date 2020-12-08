@@ -67,7 +67,7 @@ module.exports = function(){
         }
     });
 
-    /* Used for updating a chosen order */
+    /* Used for updating a chosen order_product */
 
     router.get('/:id', function(req, res){
         callbackCount = 0;
@@ -106,11 +106,17 @@ module.exports = function(){
     /* The URI that updates what data is sent to so that a chosen order is updated */
     router.put('/:id', function(req, res){
         var mysql = req.app.get('mysql');
-        var sql = "UPDATE Order_Products SET order_id = ?, product_id = ?, quantity = ? WHERE order_product_id = ?";
-        var inserts = [req.body.order_id, req.body.product_id, req.body.quantity, req.params.order_id];
+        if(req.body.product_id == 0){
+            var sql = "UPDATE Order_Products SET order_id = ?, product_id = NULL, quantity = ? WHERE order_product_id = ?";
+            var inserts = [req.body.order_id, req.body.quantity, req.params.id];
+        }
+        else{
+            var sql = "UPDATE Order_Products SET order_id = ?, product_id = ?, quantity = ? WHERE order_product_id = ?";
+            var inserts = [req.body.order_id, req.body.product_id, req.body.quantity, req.params.id];
+        }
         sql = mysql.pool.query(sql, inserts, function(error, results, fields){
             if(error){
-                console.log("There was an issue updating the selected order.")
+                console.log("There was an issue updating the selected order_product.")
                 console.log(error)
                 res.write(JSON.stringify(error));
                 res.end();
@@ -122,7 +128,7 @@ module.exports = function(){
         });
     });
 
-    /* Delete an order */
+    /* Delete an order_product*/
 
     router.delete('/:id', function(req, res){
         var mysql = req.app.get('mysql');

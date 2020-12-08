@@ -1,24 +1,26 @@
 <html>
-<h1> Update Order_Product #{{Order_Products.order_product_id}}:</h1>
+<h1> Update Order_product #{{order_product.id}}:</h1>
 <form id="update-order_product" action="/order_product" method = "post">
-    Order ID: <select name='order_id' required>
+     Order ID: <select name='order_id' required>
         {{#each order}}
           <option value='{{id}}'>{{id}} ({{first_name}} {{last_name}})</option>
         {{/each}}
     </select>
     <br>
     Product ID: <select name='product_id' required>
+        <option value = '0'> NULL</option>
         {{#each product}}
-          <option value='{{id}}'>{{product_name}}</option>
+            <option value='{{id}}'>{{id}} ({{product_name}})</option>
         {{/each}}
+        
     </select>
     <br>
-    Quantity: <input type="number" name="quantity" value="{{Order_Products.quantity}}" required min="0"><br>
+    Quantity: <input type="number" name="quantity" value="{{order_product.quantity}}" required min="0" ><br>
 </form>
-<button onclick="updateOrder_Product({{Order_Products.order_product_id}})">Update</button>
+<button onclick="updateOrder_product({{order_product.id}})">Update</button>
 <script type="text/javascript">
     
-    function updateOrder_Product(id){
+    function updateOrder_product(id){
         $.ajax({
             url: '/order_product/' + id,
             type: 'PUT',
